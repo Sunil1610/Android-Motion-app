@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int numy = 1;
     private static final int gen_delay =80;
     private static final int maxX = 800;
-    private static final int minX = -40;
+    private static final int minX = 0-40;
     private static final int maxY = 800;
     private static final int minY = 0;
     private static final int frames = 20;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         img = (ImageView) findViewById(R.id.img);
-        img.setX(0-40);img.setY(0);
+        img.setX(minX);img.setY(0);
         Bitmap bmp = getMoveForwardBM(MainActivity.this,"img_02.jpg");
         load_animation(bmp);
 
@@ -125,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
                 else if(check<3) check++;
                 else check=0;direc = 2;
                 Bitmap bitmap = getMoveForwardBM(MainActivity.this, "img_02.jpg");
-                if (img.getY() > 800) img.setY(0);
-                img.setY((int) img.getY() + 20);
+                if (img.getY() > maxY) img.setY(minY);
+                img.setY((int) img.getY() + frames);
                 load_animation(bitmap);
                 if(front.isPressed()) repeat2.postDelayed(this,gen_delay);
                 if (rect==2) {
-                    if (img.getY() < 800) repeat2.postDelayed(this, gen_delay);
-                    else {rect++;rand=0;}
+                    if (img.getY() < maxY) repeat2.postDelayed(this, gen_delay);
+                    else {rect++;}
                 }
             }
         };
@@ -169,14 +169,14 @@ public class MainActivity extends AppCompatActivity {
                 else check=0;
                 direc = 3;
                 Bitmap bitmap = getMoveForwardBM(MainActivity.this, "img_03.jpg");
-                if (img.getY() < 0) img.setY(800);
-                img.setY((int) img.getY() - 20);
+                if (img.getY() < minY) img.setY(maxY);
+                img.setY((int) img.getY() - frames);
                 load_animation(bitmap);
                 if(back.isPressed()) repeat3.postDelayed(this,gen_delay);
                 if(rect==4)
                 {
-                    if(img.getY()>=0) repeat3.postDelayed(this,gen_delay);
-                    else {rect=0;rand=0;}
+                    if(img.getY()>=minY) repeat3.postDelayed(this,gen_delay);
+                    else {rect=0;}
                 }
             }
         };
@@ -214,14 +214,14 @@ public class MainActivity extends AppCompatActivity {
                 else check=0;
                 direc = 4;
                 Bitmap bitmap = getMoveForwardBM(MainActivity.this, "img_04.jpg");
-                if (img.getX() > 800) img.setX(0 - 40);
-                img.setX((int) img.getX() + 20);
+                if (img.getX() > maxX) img.setX(minX);
+                img.setX((int) img.getX() + frames);
                 load_animation(bitmap);
                 if(right.isPressed()) repeat4.postDelayed(this,gen_delay);
                 if(rect==1)
                 {
-                    if(img.getX()<800) repeat4.postDelayed(this,gen_delay);
-                    else {rect=2;rand =0;}
+                    if(img.getX()<maxX) repeat4.postDelayed(this,gen_delay);
+                    else {rect=2;}
                 }
             }
         };
@@ -239,15 +239,15 @@ public class MainActivity extends AppCompatActivity {
         new1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img.setX(0-40);img.setY(0);direc=0;check=0;
+                img.setX(minX);img.setY(minY);direc=0;check=0;
                 rect = 1;
                 repeat4.postDelayed(run4,gen_delay);
 //                System.out.println("asha");System.out.println(rect);
-                repeat2.postDelayed(run2,5000);
+                repeat2.postDelayed(run2,55*gen_delay);
 //                System.out.println("asha");System.out.println(rect);
-                repeat1.postDelayed(run1,10000);
+                repeat1.postDelayed(run1,105*gen_delay);
 //                System.out.println("asha");System.out.println(rect);
-                repeat3.postDelayed(run3,15000);
+                repeat3.postDelayed(run3,160*gen_delay);
 //                System.out.println("asha");System.out.println(rect);
             }
         });
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void load_animation(Bitmap bitmap) {
         if (bitmap != null) {
-            bm = new Bitmap[4];
+            bm = new Bitmap[num];
 
             int currentFrame = 0;
 
